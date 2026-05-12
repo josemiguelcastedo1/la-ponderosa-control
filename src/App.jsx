@@ -58,7 +58,7 @@ function Ganaderia({animals,setAnimals}){const[tab,setTab]=useState("stock");con
 
 function Usuarios({users,setUsers,me}){const RC={Administrador:T.red,Encargado:T.blue,Trabajador:T.green,Contabilidad:T.gold};return<div><Sec title="Usuarios 👥" sub="Accesos y permisos"/><Card><div style={{fontWeight:700,fontSize:15,marginBottom:16}}>Miembros</div>{users.map(u=>(<div key={u.id} style={{display:"flex",alignItems:"center",gap:12,padding:"13px 0",borderBottom:`1px solid ${T.border}`}}><div style={{width:40,height:40,borderRadius:20,background:T.greenDim,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:800,fontSize:16,color:T.green,flexShrink:0}}>{u.nombre[0]}</div><div style={{flex:1}}><div style={{display:"flex",alignItems:"center",gap:8}}><span style={{fontWeight:600,fontSize:14}}>{u.nombre}</span>{u.id===me.id&&<Bdg color="green" xs>Yo</Bdg>}</div><div style={{fontSize:11,color:T.textMuted}}>{u.email}</div></div><Bdg color={u.rol==="Administrador"?"red":u.rol==="Encargado"?"blue":u.rol==="Contabilidad"?"gold":"green"}>{u.rol}</Bdg></div>))}</Card></div>;}
 
-const ALL_TABS=[{id:"dashboard",l:"Dashboard",i:"🏡"},{id:"tareas",l:"Tareas",i:"📋"},{id:"reportes",l:"Reportes",i:"📝"},{id:"finanzas",l:"Finanzas",i:"💰"},{id:"ganaderia",l:"Ganadería",i:"🐄"},{id:"usuarios",l:"Usuarios",i:"👥"},{id:"contabilidad",l:"Contabilidad",i:"📒"}];
+const ALL_TABS=[{id:"dashboard",l:"Dashboard",i:"🏡"},{id:"tareas",l:"Tareas",i:"📋"},{id:"reportes",l:"Reportes",i:"📝"},{id:"ganaderia",l:"Ganadería",i:"🐄"},{id:"usuarios",l:"Usuarios",i:"👥"},{id:"contabilidad",l:"Contabilidad",i:"📒"}];
 
 
 export default function App(){
@@ -69,7 +69,7 @@ export default function App(){
   const[users,setUsers]=useLS("users",SEED_USERS);
   const[user,setUser]=useState(null);
   const[tab,setTab]=useState("dashboard");
-  const ALLOWED={Trabajador:["dashboard","tareas","reportes"],Contabilidad:["dashboard","finanzas","contabilidad"]};
+ const ALLOWED={Trabajador:["dashboard","tareas","reportes"],Contabilidad:["dashboard","contabilidad"]};
   const allowed=ALLOWED[user?.rol]||ALL_TABS.map(t=>t.id);
   const visTabs=ALL_TABS.filter(t=>allowed.includes(t.id));
   if(!user)return<Login users={users} onLogin={u=>{setUser(u);setTab("dashboard");}}/>;
