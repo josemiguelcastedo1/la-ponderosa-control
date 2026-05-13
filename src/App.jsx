@@ -1,5 +1,8 @@
 import { useState, useCallback } from "react";
 import ContabilidadLP from "./Contabilidad.jsx";
+import GanaderiaLP from "./ganaderia.jsx";
+import CalendarioLP from "./Calendario.jsx";
+import ReportesLP from "./Reportes.jsx";
 
 const T={bg:"#0B0E0C",surface:"#111512",card:"#161A17",cardH:"#1C211E",border:"#222926",borderL:"#2A332C",green:"#52C97A",greenDim:"#1E4A2E",greenGlow:"rgba(82,201,122,0.12)",gold:"#D4A84B",goldDim:"rgba(212,168,75,0.12)",red:"#E05555",redDim:"rgba(224,85,85,0.1)",blue:"#4E9FE5",blueDim:"rgba(78,159,229,0.1)",orange:"#E07A35",text:"#EDF2EE",textSub:"#7A9480",textMuted:"#3D5040"};
 
@@ -57,7 +60,8 @@ function Ganaderia({animals,setAnimals}){const[tab,setTab]=useState("stock");con
 
 function Usuarios({users,setUsers,me}){const RC={Administrador:T.red,Encargado:T.blue,Trabajador:T.green,Contabilidad:T.gold};return<div><Sec title="Usuarios 👥" sub="Accesos y permisos"/><Card><div style={{fontWeight:700,fontSize:15,marginBottom:16}}>Miembros</div>{users.map(u=>(<div key={u.id} style={{display:"flex",alignItems:"center",gap:12,padding:"13px 0",borderBottom:`1px solid ${T.border}`}}><div style={{width:40,height:40,borderRadius:20,background:T.greenDim,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:800,fontSize:16,color:T.green,flexShrink:0}}>{u.nombre[0]}</div><div style={{flex:1}}><div style={{display:"flex",alignItems:"center",gap:8}}><span style={{fontWeight:600,fontSize:14}}>{u.nombre}</span>{u.id===me.id&&<Bdg color="green" xs>Yo</Bdg>}</div><div style={{fontSize:11,color:T.textMuted}}>{u.email}</div></div><Bdg color={u.rol==="Administrador"?"red":u.rol==="Encargado"?"blue":u.rol==="Contabilidad"?"gold":"green"}>{u.rol}</Bdg></div>))}</Card></div>;}
 
-const ALL_TABS=[{id:"dashboard",l:"Dashboard",i:"🏡"},{id:"tareas",l:"Tareas",i:"📋"},{id:"reportes",l:"Reportes",i:"📝"},{id:"ganaderia",l:"Ganadería",i:"🐄"},{id:"usuarios",l:"Usuarios",i:"👥"},{id:"contabilidad",l:"Contabilidad",i:"📒"}];
+const ALL_TABS=[{id:"dashboard",l:"Dashboard",i:"🏡"},{id:"tareas",l:"Tareas",i:"📋"},{id:"reportes",l:"Reportes",i:"📝"},{id:"ganaderia",l:"Ganadería",i:"🐄"},{id:"usuarios",l:"Usuarios",i:"👥"},{id:"contabilidad",l:"Contabilidad",i:"📒"},{id:"calendario",l:"Calendario",i:"📅"}];
+
 
 
 export default function App(){
@@ -72,13 +76,7 @@ export default function App(){
   const allowed=ALLOWED[user?.rol]||ALL_TABS.map(t=>t.id);
   const visTabs=ALL_TABS.filter(t=>allowed.includes(t.id));
   if(!user)return<Login users={users} onLogin={u=>{setUser(u);setTab("dashboard");}}/>;
-  return<div style={{fontFamily:"'DM Sans','Helvetica Neue',sans-serif",background:T.bg,color:T.text,minHeight:"100vh",display:"flex",flexDirection:"column"}}>
-    <header style={{background:T.surface,borderBottom:`1px solid ${T.border}`,padding:"0 18px",height:58,display:"flex",alignItems:"center",justifyContent:"space-between",position:"sticky",top:0,zIndex:100}}>
-      <div style={{display:"flex",alignItems:"center",gap:10}}>
-        <div style={{width:34,height:34,borderRadius:9,background:`linear-gradient(135deg,${T.green},${T.greenDim})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18}}>🐄</div>
-        <div><div style={{fontSize:14,fontWeight:800}}>La Ponderosa</div><div style={{fontSize:9,color:T.textMuted,textTransform:"uppercase",letterSpacing:"1.5px"}}>Control</div></div>
-      </div>
-      <div style={{display:"flex",alignItems:"center",gap:10}}>
+  retunter",gap:10}}>
         <div><div style={{fontSize:12,fontWeight:600}}>{user.nombre.split(" ")[0]}</div><div style={{fontSize:10,color:T.textMuted}}>{user.rol}</div></div>
         <div onClick={()=>setUser(null)} style={{width:32,height:32,borderRadius:16,background:T.greenDim,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:800,fontSize:13,color:T.green,cursor:"pointer"}}>{user.nombre[0]}</div>
       </div>
@@ -87,12 +85,14 @@ export default function App(){
   {visTabs.map(t=>(<button key={t.id} onClick={()=>setTab(t.id)} style={{padding:"13px 14px",fontSize:12,fontWeight:tab===t.id?700:400,color:tab===t.id?T.green:T.textSub,borderBottom:tab===t.id?`2px solid ${T.green}`:"2px solid transparent",cursor:"pointer",whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:5,background:"none",border:"none",fontFamily:"inherit",outline:"none"}}>{t.i} {t.l}</button>))}
     <main style={{flex:1,padding:"20px 16px",maxWidth:860,margin:"0 auto",width:"100%",boxSizing:"border-box"}}>
      {tab==="dashboard"&&<Dashboard tasks={tasks} reports={reports} animals={animals} user={user} setTab={setTab}/>}
-      {tab==="tareas"&&<Tareas tasks={tasks} setTasks={setTasks} user={user}/>}
-      {tab==="reportes"&&<Reportes reports={reports} setReports={setReports} user={user}/>}
-      {tab==="finanzas"&&<Finanzas finance={finance} setFinance={setFinance} user={user}/>}
-      {tab==="ganaderia"&&<Ganaderia animals={animals} setAnimals={setAnimals}/>}
-      {tab==="usuarios"&&<Usuarios users={users} setUsers={setUsers} me={user}/>} 
-      {tab==="contabilidad"&&<ContabilidadLP/>}
+{tab==="tareas"&&<Tareas tasks={tasks} setTasks={setTasks} user={user}/>}
+{tab==="reportes"&&<ReportesLP/>}
+{tab==="finanzas"&&<Finanzas finance={finance} setFinance={setFinance} user={user}/>}
+{tab==="ganaderia"&&<GanaderiaLP/>}
+{tab==="usuarios"&&<Usuarios users={users} setUsers={setUsers} me={user}/>}
+{tab==="contabilidad"&&<ContabilidadLP/>}
+{tab==="calendario"&&<CalendarioLP/>}
+
     </main>
     <div style={{textAlign:"center",padding:"12px",fontSize:10,color:T.textMuted,borderTop:`1px solid ${T.border}`}}>La Ponderosa Control v2.0 · {new Date().toLocaleDateString("es-AR")}</div>
   </div>;
