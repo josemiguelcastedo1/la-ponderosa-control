@@ -85,7 +85,7 @@ export default function App(){
   {visTabs.map(t=>(<button key={t.id} onClick={()=>setTab(t.id)} style={{padding:"13px 14px",fontSize:12,fontWeight:tab===t.id?700:400,color:tab===t.id?T.green:T.textSub,borderBottom:tab===t.id?`2px solid ${T.green}`:"2px solid transparent",cursor:"pointer",whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:5,background:"none",border:"none",fontFamily:"inherit",outline:"none"}}>{t.i} {t.l}</button>))}
     <main style={{flex:1,padding:"20px 16px",maxWidth:860,margin:"0 auto",width:"100%",boxSizing:"border-box"}}>
      {tab==="dashboard"&&<Dashboard tasks={tasks} reports={reports} animals={animals} user={user} setTab={setTab}/>}
-{tab==="tareas"&&<Tareas tasks={tasks} setTasks={setTasks} user={user}/>}
+{visTabs.map(t=>(<button key={t.id} onClick={()=>setTab(t.id)} style={{padding:"13px 14px",fontSize:12,fontWeight:tab===t.id?700:400,color:tab===t.id?T.green:T.textSub,borderBottom:tab===t.id?`2px solid ${T.green}`:"2px solid transparent",cursor:"pointer",whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:5,background:"none",border:"none",fontFamily:"inherit",outline:"none"}}>{t.i} {t.l}</button>))}
 {tab==="reportes"&&<ReportesLP/>}
 {tab==="finanzas"&&<Finanzas finance={finance} setFinance={setFinance} user={user}/>}
 {tab==="ganaderia"&&<GanaderiaLP/>}
